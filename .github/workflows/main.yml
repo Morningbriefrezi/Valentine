@@ -1,0 +1,30 @@
+name: AI News Bot
+
+on:
+  schedule:
+    - cron: "0 5 * * *"   # 09:00 Tbilisi (UTC+4) — morning briefing
+  workflow_dispatch: {}
+
+jobs:
+  send-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Send AI News
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          HOUR=$(date -u +"%H")
+          if [ "$HOUR" = "05" ]; then
+            export MODE="morning"
+          else
+            export MODE="evening"
+          fi
+          python main.py
