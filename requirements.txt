@@ -1,0 +1,2 @@
+# No external packages needed — uses Python stdlib only
+# (urllib for HTTP, json for parsing)
