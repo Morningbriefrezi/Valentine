@@ -26,8 +26,8 @@ def main():
         print("Missing TELEGRAM_TOKEN or CHAT_ID", file=sys.stderr)
         sys.exit(1)
 
-    if not __import__("config").ANTHROPIC_API_KEY:
-        print("Missing ANTHROPIC_API_KEY", file=sys.stderr)
+    if not __import__("config").OPENAI_API_KEY:
+        print("Missing OPENAI_API_KEY", file=sys.stderr)
         sys.exit(1)
 
     print(f"Fetching AI news [{MODE}]...")
