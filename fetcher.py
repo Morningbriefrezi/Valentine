@@ -2,7 +2,7 @@ import json
 import urllib.request
 import urllib.parse
 
-from config import OPENAI_API_KEY
+from config import ANTHROPIC_API_KEY
 
 MORNING_PROMPT = """You are an AI news researcher. Search the web RIGHT NOW and find the most important AI news from the last 24 hours.
 
@@ -68,7 +68,7 @@ def fetch_ai_news(mode: str) -> str:
         method="POST",
         headers={
             "Content-Type": "application/json",
-            "x-api-key": OPENAI_API_KEY,
+            "x-api-key": ANTHROPIC_API_KEY,
             "anthropic-version": "2023-06-01",
             "anthropic-beta": "web-search-2025-03-05"
         }
