@@ -4,39 +4,27 @@ import urllib.parse
 
 from config import ANTHROPIC_API_KEY
 
-MORNING_PROMPT = """You are an AI news researcher. Search the web RIGHT NOW and find the most important AI news from the last 24 hours.
+MORNING_PROMPT = """Search for the 5 most important AI news stories from the last 24 hours.
 
-Focus ONLY on these topics:
-- New AI models released or announced (LLMs, multimodal, etc.)
-- Video generation AI models and updates (Sora, Runway, Kling, etc.)
-- AI for data / data models / analytics AI tools
-- AGI research, breakthroughs, and discussions
-- Major AI company updates (OpenAI, Anthropic, Google DeepMind, Meta AI, Mistral, xAI, etc.)
-- AI regulation and policy that affects the industry
+Topics: new AI models, video/image AI, AGI breakthroughs, major company updates (OpenAI, Anthropic, Google, Meta, xAI, Mistral), AI regulation.
 
-For each news item provide:
-1. A clear headline
-2. 2-3 sentence summary of what happened
+For each story:
+1. Headline
+2. 2-sentence summary
 3. Why it matters
 
-Find 5-7 of the most significant stories. Be specific with names, numbers, and dates. Only include real, verified news from today or yesterday."""
+Use specific names, numbers, and dates. Only real, verified news."""
 
-EVENING_PROMPT = """You are an AI news researcher. Search the web RIGHT NOW and find AI news and analysis from the last 24 hours.
+EVENING_PROMPT = """Search for the 5 most significant AI news stories from the last 24 hours.
 
-Focus ONLY on these topics:
-- Deep dives: new AI model benchmarks, performance comparisons, technical details
-- Video AI and image generation model updates and new releases
-- AI tools and products launched today for developers or consumers
-- AGI timeline discussions, safety research, alignment news
-- AI investment, funding rounds, and business news
-- Interesting AI research papers published today
+Topics: model benchmarks, video/image AI updates, new AI tools for developers or consumers, AGI/safety research, AI funding, notable research papers.
 
-For each news item provide:
-1. A clear headline
-2. 2-3 sentence summary
+For each story:
+1. Headline
+2. 2-sentence summary
 3. Why it matters for AI's future
 
-Find 5-7 of the most significant stories. Be specific with names, numbers, and dates. Only include real news from today or yesterday."""
+Use specific names, numbers, and dates. Only real news."""
 
 
 def fetch_ai_news(mode: str) -> str:
@@ -45,12 +33,13 @@ def fetch_ai_news(mode: str) -> str:
     prompt = MORNING_PROMPT if mode == "morning" else EVENING_PROMPT
 
     payload = {
-        "model": "claude-sonnet-4-20250514",
-        "max_tokens": 2000,
+        "model": "claude-haiku-4-5-20251001",
+        "max_tokens": 1200,
         "tools": [
             {
                 "type": "web_search_20250305",
-                "name": "web_search"
+                "name": "web_search",
+                "max_uses": 3
             }
         ],
         "messages": [
